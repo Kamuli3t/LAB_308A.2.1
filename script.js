@@ -38,6 +38,7 @@ class Character {
     this.name = name;
     this.health = 100;
     this.inventory = [];
+    this.companion = {};
   }
   roll(mod = 0) {
     const result = Math.floor(Math.random() * 20) + 1 + mod;
@@ -59,8 +60,8 @@ console.log(robin.roll());
 //! Part 3
 class Adventurer extends Character {
   constructor(name, role) {
-    super(...characterProps);
-    role;
+    super(name);
+    this.role;
     this.inventory.push("bedroll", "50 gold coins");
   }
   // Adventurers have the ability to scout ahead of them.
@@ -86,5 +87,25 @@ class Adventurer extends Character {
   }
   rest() {
     console.log(`${this.name} is resting to recover strength.`);
+  }
+}
+
+class Companion extends Character {
+  constructor(name, type) {
+    super(name);
+    this.type = type;
+  }
+
+  heal(target) {
+    console.log(`${this.name} heals ${target.name}, restoring some health.`);
+    target.health += 10; // Example healing value
+    console.log(`${target.name} now has ${target.health} health.`);
+  }
+
+  encourage(target) {
+    console.log(
+      `${this.name} encourages ${target.name}, boosting their morale.`
+    );
+    target.health += 5; // Small morale-based buff
   }
 }
