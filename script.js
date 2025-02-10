@@ -1,5 +1,3 @@
-//* I'm using JS debug Terminal from VS code.
-
 const adventurer = {
   name: "Robin",
   health: 10,
@@ -16,6 +14,7 @@ adventurer.companion = { name: "Leo", type: "Cat" };
 console.log(adventurer);
 
 const leo = adventurer.companion;
+// adventurer.companion.companion
 
 leo.companion = {
   name: "Frank",
@@ -31,3 +30,61 @@ adventurer.roll = function (mod = 0) {
 adventurer.roll();
 adventurer.roll();
 adventurer.roll();
+
+// Many Characters make class instead
+
+class Character {
+  constructor(name) {
+    this.name = name;
+    this.health = 100;
+    this.inventory = [];
+  }
+  roll(mod = 0) {
+    const result = Math.floor(Math.random() * 20) + 1 + mod;
+    console.log(`${this.name} rolled a ${result}`);
+  }
+}
+
+const robin = new Character("Robin");
+robin.inventory = ["sword", "potion", "artifact"];
+robin.companion = new Character("Leo"); // reusability
+robin.companion.type = "Cat";
+robin.companion.companion = new Character("Frank");
+robin.companion.companion.type = "Flea";
+robin.companion.companion.inventory = ["small hat", "sunglasses"];
+
+console.log(robin);
+console.log(robin.roll());
+
+//! Part 3
+class Adventurer extends Character {
+  constructor(name, role) {
+    super(...characterProps);
+    role;
+    this.inventory.push("bedroll", "50 gold coins");
+  }
+  // Adventurers have the ability to scout ahead of them.
+  scout() {
+    console.log(`${this.name} is scouting ahead...`);
+    super.roll();
+  }
+  explore() {
+    console.log(`${this.name} is exploring the surroundings...`);
+    super.roll();
+  }
+  navigate() {
+    console.log(`${this.name} is trying to find the best route.`);
+    super.roll();
+  }
+  attack(target) {
+    console.log(`${this.name} attacks ${target} with their weapon!`);
+    super.roll();
+  }
+  defend() {
+    console.log(`${this.name} braces for impact!`);
+    super.roll();
+  }
+  rest() {
+    console.log(`${this.name} is resting to recover strength.`);
+  }
+}
