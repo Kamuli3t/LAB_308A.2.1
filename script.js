@@ -34,12 +34,16 @@ adventurer.roll();
 // Many Characters make class instead
 
 class Character {
+  static MAX_HEALTH = 100;
+  static DEFAULT_INVENTORY = ["torch", "rations"];
+
   constructor(name) {
     this.name = name;
     this.health = 100;
-    this.inventory = [];
+    this.inventory = [...Character.DEFAULT_INVENTORY];
     this.companion = {};
   }
+
   roll(mod = 0) {
     const result = Math.floor(Math.random() * 20) + 1 + mod;
     console.log(`${this.name} rolled a ${result}`);
@@ -59,11 +63,17 @@ console.log(robin.roll());
 
 //! Part 3
 class Adventurer extends Character {
+  static ROLES = ["Fighter", "Healer", "Wizard", "Protector"];
+
   constructor(name, role) {
     super(name);
+    if (!adventurer.ROLES.includes(role)) {
+      throw new Error(`Invalid role: ${role} doesn't exist`);
+    }
     this.role;
     this.inventory.push("bedroll", "50 gold coins");
   }
+
   // Adventurers have the ability to scout ahead of them.
   scout() {
     console.log(`${this.name} is scouting ahead...`);
@@ -109,3 +119,19 @@ class Companion extends Character {
     target.health += 5; // Small morale-based buff
   }
 }
+
+const cRobin = new Adventurer("Robin");
+const cLeo = new Companion("Leo", "Cat");
+const cFrank = new Companion("Frank", "Flea");
+cRobin.companion = cLeo;
+cRobin.companion.companion = cFrank;
+
+console.log("This is with classes");
+console.log(cRobin);
+
+//! Part 4
+// made those changes to the previous code
+
+//
+
+//! Part 5
